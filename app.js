@@ -56,7 +56,7 @@ app.post('/api/data',(req,res)=>{
         return res.status(400).json({error: 'No se recibieron datos'});
     }
 
-    res.status.json({
+    res.status(201).json({
         message: 'Datos recibidos en Json',
         data
     })
