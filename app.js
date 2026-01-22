@@ -22,7 +22,7 @@ app.get('/users/:id',(req,res)=>{
     const userId=req.params.id;
     res.send(`Mostrar informacion del usuario con ID: ${userId}`)
     //http://localhost:3005/users/123
-})
+});
 
 app.get('/search/',(req,res)=>{
     const terms = req.query.termino || 'No especificado';
@@ -35,7 +35,33 @@ app.get('/search/',(req,res)=>{
         `)
 
     //http://localhost:3005/search?termino=expressjs&categoria=nodejs
-})
+});
+
+app.post('/form',(req,res)=>{
+    const name = req.body.nombre || 'Anonimo';
+    const email = req.body.email || 'No proporcionado';
+    res.json({
+        message: 'Datos recibidos',
+        data: {
+            name,
+            email
+        }
+    });
+});
+
+app.post('/api/data',(req,res)=>{
+    const data = req.body;
+
+    if(!data || Object.keys(data).length == 0){
+        return res.status(400).json({error: 'No se recibieron datos'});
+    }
+
+    res.status.json({
+        message: 'Datos recibidos en Json',
+        data
+    })
+});
+
 
 app.listen(PORT, ()=>{
     console.log(`Servidor: http://localhost:${PORT}`)
