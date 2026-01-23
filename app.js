@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser =require('body-parser');
 
+const fs = require('fs');
+const path = require('path');
+const userFilePath = path.join(__dirname, 'users.json'); //ruta para leer archivo
 
 const app = express();
 app.use(bodyParser.json());
@@ -62,6 +65,16 @@ app.post('/api/data',(req,res)=>{
     })
 });
 
+app.get('/users',(req,res)=>{
+    fs.readFile(userFilePath,'utf-8',(err,data)=>{
+        if(err){
+            return res.status(500).json({error: 'Error con conexion de datos.'})
+        }
+
+        const users = JSON.parse(data);
+        res.json(users)
+    })
+});
 
 app.listen(PORT, ()=>{
     console.log(`Servidor: http://localhost:${PORT}`)
